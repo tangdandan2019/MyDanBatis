@@ -25,9 +25,9 @@ import java.util.Properties;
 public class DefaultSqlSessionFactory implements SqlSessionFactory {
     private final Configuration configuration = new Configuration();
     //xml文件存放位置
-    public static final String MAPPER_CONFIG_LOCATION ="mappers";
+    public static final String MAPPER_CONFIG_LOCATION ="D:/workspace/dandan-learn-mybatis/src/main/resources/mapper";
     //数据库信息存放位置
-    public static final String DB_CONFIG_FILE ="db.properties";
+    public static final String DB_CONFIG_FILE ="D:/workspace/dandan-learn-mybatis/src/main/resources/db.properties";
 
     public DefaultSqlSessionFactory(){
         //加载数据库配置信息
@@ -40,9 +40,7 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
      * 加载mapper.xml信息
      */
     private void loadMapperInfo() {
-     URL resources =null;
-     resources = this.getClass().getClassLoader().getResource(MAPPER_CONFIG_LOCATION);
-     File mapper = new File(resources.getFile());
+     File mapper = new File(MAPPER_CONFIG_LOCATION);
      //读取文件夹下的任意文件信息
       if(mapper.isDirectory()){
           File[] files = mapper.listFiles();
@@ -62,7 +60,7 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
         SAXReader reader = new SAXReader();
         Document document = null;
         try {
-            reader.read(file);
+            document=reader.read(file);
         } catch (DocumentException e) {
             log.info("XML文件解析失败{}"+e);
         }
@@ -88,12 +86,16 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
             switch (ele.getName()){
                 case "select":
                     sqlCommandType = SqlCommandType.SELECT;
+                    break;
                 case "update":
                     sqlCommandType = SqlCommandType.UPDATE;
+                    break;
                 case "insert":
                     sqlCommandType = SqlCommandType.INSERT;
+                    break;
                 case "delete":
                     sqlCommandType = SqlCommandType.DELETE;
+                    break;
                 default:
                     sqlCommandType = SqlCommandType.UNKNOWN;
             }
@@ -112,7 +114,7 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
     private void loadDBInfo() {
         Properties properties = new Properties();
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("D:/workspace/dandan-learn-mybatis/src/main/resources/db.properties"));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(DB_CONFIG_FILE));
             properties.load(bufferedReader);
             configuration.setJdbcDriver(properties.getProperty("jdbc.driver"));
             configuration.setJdbcPassword(properties.getProperty("jdbc.url"));
