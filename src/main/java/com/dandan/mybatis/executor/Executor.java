@@ -1,11 +1,8 @@
 package com.dandan.mybatis.executor;
 
-import com.dandan.mybatis.configuration.MapperStatement;
+import com.dandan.mybatis.configuration.MappedStatement;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 /**
  * @Author: tangdandan
@@ -19,5 +16,5 @@ public interface Executor {
      * @param <T>
      * @return
      */
-    <T> List<T> query(MapperStatement ms, Object parameter);
+    <T> List<T> query(MappedStatement ms, Object parameter);
 }

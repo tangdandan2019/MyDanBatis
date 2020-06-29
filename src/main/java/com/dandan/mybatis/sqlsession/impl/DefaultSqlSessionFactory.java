@@ -1,23 +1,21 @@
 package com.dandan.mybatis.sqlsession.impl;
 
 import com.dandan.mybatis.configuration.Configuration;
-import com.dandan.mybatis.configuration.MapperStatement;
+import com.dandan.mybatis.configuration.MappedStatement;
+import com.dandan.mybatis.enums.SqlCommandType;
 import com.dandan.mybatis.sqlsession.SqlSession;
 import com.dandan.mybatis.sqlsession.SqlSessionFactory;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import org.slf4j.Logger;
 
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 /**
  * @Author: tangdandan
@@ -82,16 +80,28 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
         all.addAll(updates);
         all.addAll(inserts);
         for (Element ele : all){
-            MapperStatement mapperStatement = new MapperStatement();
+            MappedStatement mapperStatement = new MappedStatement();
             String id = ele.attribute("id").getData().toString();
             String resultType = ele.attribute("resultType").getData().toString();
             String sql = ele.getData().toString();
-
+            SqlCommandType sqlCommandType ;
+            switch (ele.getName()){
+                case "select":
+                    sqlCommandType = SqlCommandType.SELECT;
+                case "update":
+                    sqlCommandType = SqlCommandType.UPDATE;
+                case "insert":
+                    sqlCommandType = SqlCommandType.INSERT;
+                case "delete":
+                    sqlCommandType = SqlCommandType.DELETE;
+                default:
+                    sqlCommandType = SqlCommandType.UNKNOWN;
+            }
+            mapperStatement.setSqlCommandType(sqlCommandType);
             mapperStatement.setId(namespace+"."+id);
             mapperStatement.setNamespace(namespace);
             mapperStatement.setResultType(resultType);
             mapperStatement.setSql(sql);
-
             configuration.getMappedStatement().put(namespace+"."+id,mapperStatement);
         }
     }

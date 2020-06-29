@@ -1,7 +1,7 @@
 package com.dandan.mybatis.sqlsession.impl;
 
 import com.dandan.mybatis.configuration.Configuration;
-import com.dandan.mybatis.configuration.MapperStatement;
+import com.dandan.mybatis.configuration.MappedStatement;
 import com.dandan.mybatis.executor.Executor;
 import com.dandan.mybatis.executor.SimpleExecutor;
 import com.dandan.mybatis.sqlsession.SqlSession;
@@ -23,7 +23,7 @@ public class DefaultSqlSession implements SqlSession {
     public DefaultSqlSession(Configuration configuration) {
         super();
         this.configuration =configuration;
-         executor= new SimpleExecutor();
+         executor= new SimpleExecutor(configuration);
     }
 
     @Override
@@ -41,12 +41,17 @@ public class DefaultSqlSession implements SqlSession {
 
     @Override
     public <T> List<T> selectList(String statement, Object parameter) {
-        MapperStatement ms = configuration.getMappedStatement().get(statement);
+        MappedStatement ms = configuration.getMappedStatement().get(statement);
         return executor.query(ms,parameter);
     }
 
     @Override
     public <T> T getMapper(Class<T> type) {
         return configuration.getMapper(type,this);
+    }
+
+    @Override
+    public Configuration getConfiguration() {
+        return this.configuration;
     }
 }

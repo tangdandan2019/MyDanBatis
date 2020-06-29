@@ -15,8 +15,15 @@ public class MapperRegistry {
         this.config = config;
     }
 
-    public <T> T getMapper( SqlSession sqlSession) {
-
-        return new MapperProxyFactory<T>(sqlSession).newInstance(sqlSession);
+    /**
+     * 获取mapper
+     * @param type
+     * @param sqlSession
+     * @param <T>
+     * @return
+     */
+    public <T> T getMapper(Class<T> type, SqlSession sqlSession) {
+        MapperProxyFactory<T> mapperProxyFactory = new MapperProxyFactory<>(type);
+        return mapperProxyFactory.newInstance(sqlSession);
     }
 }

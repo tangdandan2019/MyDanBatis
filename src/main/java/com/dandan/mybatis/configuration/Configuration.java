@@ -17,10 +17,10 @@ public class Configuration {
     private String jdbcUrl;
     private String jdbcPassword;
     private String jdbcUsername;
-    private Map<String, MapperStatement> mappedStatement = new HashMap<>();
+    private Map<String, MappedStatement> mappedStatement = new HashMap<>();
     protected MapperRegistry mapperRegistry =new MapperRegistry(this);
 
     public <T> T getMapper(Class<T> type, SqlSession sqlSession) {
-        return mapperRegistry.getMapper(sqlSession);
+        return mapperRegistry.getMapper(type,sqlSession);
     }
 }
