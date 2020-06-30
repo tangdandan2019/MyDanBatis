@@ -4,7 +4,7 @@
     <select id="selectByPrimaryKey" resultType="User">
 	        select *
 	        from t_user
-	        where userId = #{userId}
+	        where user_id = #{userId}
 	    </select>
 
     <select id="selectAll" resultType="User">

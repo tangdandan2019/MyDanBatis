@@ -27,7 +27,7 @@ public class DefaultSqlSession implements SqlSession {
     }
 
     @Override
-    public <T> T selectOne(String statement, Object parameter) {
+    public <T> T selectOne(String statement, Object[] parameter) {
         List<T> res = this.selectList(statement, parameter);
         if(res==null||res.size()==0){
             return null;
@@ -40,7 +40,7 @@ public class DefaultSqlSession implements SqlSession {
     }
 
     @Override
-    public <T> List<T> selectList(String statement, Object parameter) {
+    public <T> List<T> selectList(String statement, Object[] parameter) {
         MappedStatement ms = configuration.getMappedStatement().get(statement);
         return executor.query(ms,parameter);
     }

@@ -116,9 +116,9 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(DB_CONFIG_FILE));
             properties.load(bufferedReader);
-            configuration.setJdbcDriver(properties.getProperty("jdbc.driver"));
-            configuration.setJdbcPassword(properties.getProperty("jdbc.url"));
-            configuration.setJdbcUrl(properties.getProperty("jdbc.username"));
+            configuration.setJdbcDriver(properties.getProperty("jdbc.DriverClassName"));
+            configuration.setJdbcUrl(properties.getProperty("jdbc.url"));
+            configuration.setJdbcUsername(properties.getProperty("jdbc.username"));
             configuration.setJdbcPassword(properties.getProperty("jdbc.password"));
         } catch (IOException e) {
             log.error("数据库连接信息文件读取失败：{}",e.getCause() );

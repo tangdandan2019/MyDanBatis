@@ -16,5 +16,5 @@ public interface Executor {
      * @param <T>
      * @return
      */
-    <T> List<T> query(MappedStatement ms, Object parameter);
+    <T> List<T> query(MappedStatement ms, Object[] parameter);
 }

@@ -16,7 +16,7 @@ public interface SqlSession {
      * @param <T>
      * @return
      */
-    <T> T selectOne(String statement,Object parameter);
+    <T> T selectOne(String statement,Object[] parameter);
 
     /**
      * 查询对象列表
@@ -25,7 +25,7 @@ public interface SqlSession {
      * @param <T>
      * @return
      */
-    <T> List<T> selectList(String statement,Object parameter);
+    <T> List<T> selectList(String statement,Object[] parameter);
 
     /**
      * 获取mapper

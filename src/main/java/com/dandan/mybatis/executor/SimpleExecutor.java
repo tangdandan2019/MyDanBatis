@@ -21,7 +21,7 @@ public class SimpleExecutor  implements Executor{
     }
 
     @Override
-    public <T> List<T> query(MappedStatement ms, Object parameter) {
+    public <T> List<T> query(MappedStatement ms, Object[] parameter) {
         System.out.println(ms.getSql());
         List<T> res = new ArrayList<>();
 
@@ -36,8 +36,8 @@ public class SimpleExecutor  implements Executor{
         try {
             connection = DriverManager.getConnection(configuration.getJdbcUrl(), configuration.getJdbcUsername(), configuration.getJdbcPassword());
             String regex = "#\\{([^}])*\\}";
-            String sql = ms.getSql().replaceAll(regex, "");
-            PreparedStatement prepareStatement = connection.prepareStatement(sql);
+            String sql = ms.getSql().replaceAll(regex, "?");
+            preparedStatement = connection.prepareStatement(sql);
             parametersize(preparedStatement,parameter);
             resultSet = preparedStatement.executeQuery();
             handlerResultSet(resultSet,res,ms.getResultType());
@@ -63,20 +63,7 @@ public class SimpleExecutor  implements Executor{
      * @param <T>
      */
     private <T> void handlerResultSet(ResultSet resultSet, List<T> res, String resultType) {
-        Class<T> clazz = null;
-        try {
-            clazz= (Class<T> )Class.forName(resultType);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        try{
-            while (resultSet.next()){
-                 Object entity = clazz.newInstance();
-                System.out.println(entity);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        System.out.println(resultSet);
     }
 
     /**
@@ -84,13 +71,13 @@ public class SimpleExecutor  implements Executor{
      * @param preparedStatement
      * @param parameter
      */
-    private void parametersize(PreparedStatement preparedStatement, Object parameter) throws SQLException {
-        if(parameter instanceof Integer){
-            preparedStatement.setInt(1,(int)parameter);
-        }else if(parameter instanceof  Long){
-            preparedStatement.setLong(1,(Long)parameter);
-        }else if(parameter instanceof  String){
-            preparedStatement.setString(1,(String)parameter);
+    private void parametersize(PreparedStatement preparedStatement, Object[] parameter) throws SQLException {
+        if(parameter[0] instanceof Integer){
+            preparedStatement.setInt(1,(int)parameter[0]);
+        }else if(parameter[0] instanceof  Long){
+            preparedStatement.setLong(1,(Long)parameter[0]);
+        }else if(parameter[0] instanceof  String){
+            preparedStatement.setString(1,(String)parameter[0]);
         }
     }
 }

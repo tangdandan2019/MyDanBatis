@@ -1,7 +1,6 @@
 package com.dandan.mybatis.test;
 
 import com.dandan.mybatis.sqlsession.SqlSession;
-import com.dandan.mybatis.sqlsession.SqlSessionFactory;
 import com.dandan.mybatis.sqlsession.impl.DefaultSqlSessionFactory;
 import com.dandan.mybatis.test.mapper.UserMapper;
 import com.dandan.mybatis.test.pojo.User;
