@@ -8,8 +8,8 @@ import lombok.Data;
  */
 @Data
 public class User {
-    private Long userId;
-    private String userName;
+    private Integer user_id;
+    private String user_name;
     private Integer sex;
     private String role;
 }

@@ -4,6 +4,7 @@ import com.dandan.mybatis.configuration.Configuration;
 import com.dandan.mybatis.configuration.MappedStatement;
 import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +64,28 @@ public class SimpleExecutor  implements Executor{
      * @param <T>
      */
     private <T> void handlerResultSet(ResultSet resultSet, List<T> res, String resultType) {
-        System.out.println(resultSet);
+        Class<T> clazz = null;
+        try {
+            clazz = (Class<T>) Class.forName(resultType);
+        } catch (ClassNotFoundException e) {
+
+            e.printStackTrace();
+        }
+        try {
+            Object t = clazz.newInstance();
+            while(resultSet.next()){
+                Field[] declaredFields = clazz.getDeclaredFields();
+                for (Field field : declaredFields) {
+                    field.setAccessible(true);
+                    String filedName = field.getName();
+                    field.set(t,field.getType().cast(resultSet.getObject(filedName)));
+                }
+                res.add((T)t);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
