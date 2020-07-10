@@ -26,7 +26,7 @@
         <okhttp.version>4.0.0</okhttp.version>
         <jacoco.version>0.8.3</jacoco.version>
         <mongoplus.version>1.0.0.RELEASE</mongoplus.version>
-        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <freemarker.version>2.3.20</freemarker.version>
         <velocity.version>2.0</velocity.version>
         <commons-io.version>2.6</commons-io.version>
