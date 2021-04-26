@@ -29,7 +29,7 @@
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
         <freemarker.version>2.3.20</freemarker.version>
         <velocity.version>2.0</velocity.version>
-        <commons-io.version>2.6</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <easyexcels.version>2.1.2</easyexcels.version>
         <kms-client-mybatis.version>1.0.0-RELEASE</kms-client-mybatis.version>
         <log4j2-kafka.version>1.0.5-RELEASE</log4j2-kafka.version>
