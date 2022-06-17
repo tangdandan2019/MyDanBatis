@@ -22,7 +22,7 @@
         <druid.version>1.1.18</druid.version>
         <mybatisplus.version>3.1.2</mybatisplus.version>
         <job.version>1.9.1</job.version>
-        <fastjson.version>1.2.57</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <okhttp.version>4.0.0</okhttp.version>
         <jacoco.version>0.8.3</jacoco.version>
         <mongoplus.version>1.0.0.RELEASE</mongoplus.version>
